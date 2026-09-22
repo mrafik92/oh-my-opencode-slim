@@ -9,6 +9,7 @@ import {
 } from 'bun:test';
 import { z } from 'zod';
 import {
+  AgentOverrideConfigSchema,
   InterviewConfigSchema,
   MultiplexerConfigSchema,
   MultiplexerConfigStrictSchema,
@@ -18,6 +19,20 @@ import {
   resetMultiplexerDiagnostics,
   sanitizeMultiplexerConfig,
 } from './schema';
+
+describe('AgentOverrideConfigSchema mode', () => {
+  it('accepts the supported SDK agent modes', () => {
+    for (const mode of ['primary', 'subagent', 'all'] as const) {
+      expect(AgentOverrideConfigSchema.safeParse({ mode }).success).toBe(true);
+    }
+  });
+
+  it('rejects unsupported SDK agent modes', () => {
+    expect(
+      AgentOverrideConfigSchema.safeParse({ mode: 'invalid' }).success,
+    ).toBe(false);
+  });
+});
 
 describe('ProviderModelIdSchema', () => {
   it('accepts and preserves model remainders with spaces and nested segments', () => {
