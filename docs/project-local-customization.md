@@ -200,13 +200,13 @@ The allowed values are `primary`, `subagent`, and `all`. When omitted, the
 orchestrator remains `primary`, council remains `all`, and other built-in or
 custom agents remain `subagent`.
 
-For example, a project-local custom `hsl-wizard` agent can be available both
-to users and for delegation:
+For example, a project-local custom agent can be available both to users and
+for delegation:
 
 ```jsonc
 {
   "agents": {
-    "hsl-wizard": {
+    "custom-reviewer": {
       "model": "openai/gpt-5.6-luna",
       "mode": "all"
     }
