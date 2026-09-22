@@ -856,6 +856,20 @@ describe('agent classification', () => {
       }
     }
   });
+
+  test('mode overrides classification for built-in agents', () => {
+    const configs = getAgentConfigs(
+      runtimeFor({
+        agents: {
+          explorer: { mode: 'all' },
+          orchestrator: { mode: 'subagent' },
+        },
+      }),
+    );
+
+    expect(configs.explorer.mode).toBe('all');
+    expect(configs.orchestrator.mode).toBe('subagent');
+  });
 });
 
 describe('createAgents', () => {

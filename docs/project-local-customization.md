@@ -21,6 +21,7 @@ This document describes how to configure and customize oh-my-opencode-slim on a 
 | **Per-agent skills** | `agents.<agent>.skills` | Explicitly restrict or authorize specific local codebase skills/scripts that this agent is allowed to execute. |
 | **Automatic project-local skills** | `agents.<agent>.skills_include_local` | Add all valid skills discovered under this project's `.opencode/skills/**/SKILL.md` tree without listing every skill name. |
 | **Per-agent MCPs** | `agents.<agent>.mcps` | Assign, restrict, or authorize specific Model Context Protocol (MCP) servers (like `context7` or `gh_grep`) to specific agents. |
+| **Per-agent mode** | `agents.<agent>.mode` | Override the SDK classification with `primary`, `subagent`, or `all`. By default, orchestrator is `primary`, council is `all`, and other built-in or custom agents are `subagent`. |
 | **Presets** | `presets` configuration block | Bundle named agent environments. User and project preset definitions deep-merge; the active preset then merges into `agents`. |
 | **Precedence** | User config, project config, presets, prompt files | Project-local settings take precedence over user-global settings, while root `agents.*` entries beat active preset entries. |
 
@@ -189,6 +190,29 @@ Every non-orchestrator agent (both built-in and custom) can define an `orchestra
 - **Display name rewriting:** Any mentions of `@<internalName>` within the `orchestratorPrompt` are automatically mapped to the agent's custom `displayName` if one was defined.
 - **Disabled agents:** If an agent is disabled via the `disabled_agents` config option, its `orchestratorPrompt` is **not** injected.
 - **Orchestrator agent constraint:** The orchestrator agent itself cannot define an `orchestratorPrompt`. Setting `agents.orchestrator.orchestratorPrompt` will be rejected by the schema.
+
+---
+
+## Agent Mode Override
+
+Set `agents.<name>.mode` to explicitly control the OpenCode SDK classification.
+The allowed values are `primary`, `subagent`, and `all`. When omitted, the
+orchestrator remains `primary`, council remains `all`, and other built-in or
+custom agents remain `subagent`.
+
+For example, a project-local custom `hsl-wizard` agent can be available both
+to users and for delegation:
+
+```jsonc
+{
+  "agents": {
+    "hsl-wizard": {
+      "model": "openai/gpt-5.6-luna",
+      "mode": "all"
+    }
+  }
+}
+```
 
 ---
 

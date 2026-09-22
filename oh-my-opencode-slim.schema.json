@@ -81,6 +81,15 @@
                         "orchestrator"
                       ]
                     },
+                    "mode": {
+                      "description": "Optional SDK agent classification override. Defaults to primary for orchestrator, all for council, and subagent for other agents.",
+                      "type": "string",
+                      "enum": [
+                        "primary",
+                        "subagent",
+                        "all"
+                      ]
+                    },
                     "temperature": {
                       "type": "number",
                       "minimum": 0,
@@ -577,6 +586,15 @@
                     "orchestrator"
                   ]
                 },
+                "mode": {
+                  "description": "Optional SDK agent classification override. Defaults to primary for orchestrator, all for council, and subagent for other agents.",
+                  "type": "string",
+                  "enum": [
+                    "primary",
+                    "subagent",
+                    "all"
+                  ]
+                },
                 "temperature": {
                   "type": "number",
                   "minimum": 0,
@@ -1059,6 +1077,15 @@
                   "enum": [
                     "session",
                     "orchestrator"
+                  ]
+                },
+                "mode": {
+                  "description": "Optional SDK agent classification override. Defaults to primary for orchestrator, all for council, and subagent for other agents.",
+                  "type": "string",
+                  "enum": [
+                    "primary",
+                    "subagent",
+                    "all"
                   ]
                 },
                 "temperature": {
@@ -1546,6 +1573,15 @@
             "enum": [
               "session",
               "orchestrator"
+            ]
+          },
+          "mode": {
+            "description": "Optional SDK agent classification override. Defaults to primary for orchestrator, all for council, and subagent for other agents.",
+            "type": "string",
+            "enum": [
+              "primary",
+              "subagent",
+              "all"
             ]
           },
           "temperature": {

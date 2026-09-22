@@ -816,6 +816,7 @@ export function getAgentConfigs(
   options?: { projectDirectory?: string; hostFlavor?: string },
 ): Record<string, SDKAgentConfig> {
   const agents = createAgents(runtime, options);
+  const configuredAgents = runtime.agents();
 
   const applyClassification = (
     name: string,
@@ -825,7 +826,10 @@ export function getAgentConfigs(
       hidden?: boolean;
     },
   ): void => {
-    if (name === 'council') {
+    const configuredMode = getOverrideFromAgents(configuredAgents, name)?.mode;
+    if (configuredMode !== undefined) {
+      sdkConfig.mode = configuredMode;
+    } else if (name === 'council') {
       // Council is callable both as a primary agent (user-facing)
       // and as a subagent (orchestrator can delegate to it)
       sdkConfig.mode = 'all';

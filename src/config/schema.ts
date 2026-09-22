@@ -58,6 +58,9 @@ export const AgentColorSchema = z.union([
 // Agent override configuration (distinct from SDK's AgentConfig)
 export const ModelInheritanceSourceSchema = z.enum(['session', 'orchestrator']);
 
+export const AgentModeSchema = z.enum(['primary', 'subagent', 'all']);
+export type AgentMode = z.infer<typeof AgentModeSchema>;
+
 export const AgentOverrideConfigSchema = z
   .object({
     model: z
@@ -77,6 +80,9 @@ export const AgentOverrideConfigSchema = z
       ])
       .optional(),
     inheritModelFrom: ModelInheritanceSourceSchema.optional(),
+    mode: AgentModeSchema.optional().describe(
+      'Optional SDK agent classification override. Defaults to primary for orchestrator, all for council, and subagent for other agents.',
+    ),
     temperature: z.number().min(0).max(2).optional(),
     variant: z.string().optional().catch(undefined),
     skills: z.array(z.string()).optional(), // skills this agent can use ("*" = all, "!item" = exclude)

@@ -11,6 +11,21 @@ function runtimeFor(config: PluginConfig | undefined = {}) {
 }
 
 describe('custom-agent creation', () => {
+  test('honors an explicit mode override for hsl-wizard', () => {
+    const configs = getAgentConfigs(
+      runtimeFor({
+        agents: {
+          'hsl-wizard': {
+            model: 'openai/gpt-5.6-luna',
+            mode: 'all',
+          },
+        },
+      }),
+    );
+
+    expect(configs['hsl-wizard']?.mode).toBe('all');
+  });
+
   test('infers custom agents from unknown keys', () => {
     const config: PluginConfig = {
       agents: {
